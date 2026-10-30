@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TecnoMax | Computadoras</title>
+<link rel="icon" href="img/LogoTecnoMax.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F8FD;--surface:#fff;--ink:#0B1F3A;--muted:#4A5F7A;--brand:#1B8AE0;--deep:#0E3F85;--line:#D5E2F2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08172B;--surface:#0F2542;--ink:#EAF2FB;--muted:#9FB4CC;--brand:#4DA8F0;--deep:#0E3F85;--line:#1D3A5F}}
+:root[data-theme="dark"]{--bg:#08172B;--surface:#0F2542;--ink:#EAF2FB;--muted:#9FB4CC;--brand:#4DA8F0;--deep:#0E3F85;--line:#1D3A5F}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Sora,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;font-size:1.3rem}
+.brand img{width:44px;height:44px;border-radius:50%}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
+nav a:hover{color:var(--brand)}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;padding:56px 0 72px}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.08;margin:0 0 20px;font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--muted);max-width:52ch;margin:0 0 28px;font-size:1.05rem}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:600;text-decoration:none;background:var(--brand);color:#04162B}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+.emblem{justify-self:center;width:min(100%,340px);aspect-ratio:1;border-radius:50%;box-shadow:0 30px 60px -20px rgba(27,138,224,.55)}
+.emblem img{width:100%;height:100%;display:block;border-radius:50%}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 10px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 32px;max-width:60ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.card:first-child{border-left:5px solid var(--brand)}
+.card h3{margin:0 0 8px;font-size:1.1rem}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* Catálogo de computadores */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.filters button{font:inherit;padding:8px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#04162B;font-weight:600}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.pcard .pic{height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+.pcard .pic img{width:100%;height:100%;object-fit:contain;padding:8px}
+.pcard .miss{font-size:.75rem;color:#b00020;text-align:center;padding:10px}
+.pcard .body{padding:16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.pcard small{color:var(--muted)}
+.pcard h3{margin:0;font-size:1.02rem}
+.pcard .price{font-weight:800;font-size:1.15rem;color:var(--brand);margin-top:auto;padding-top:10px}
+.pcard .btn{text-align:center;margin-top:10px;padding:10px}
+
+.guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.guide div{padding:24px;border-right:1px solid var(--line)}
+.guide div:last-child{border-right:0}
+.guide b{display:block;margin-bottom:6px;color:var(--brand)}
+.guide span{color:var(--muted);font-size:.95rem}
+.cta{background:var(--deep);color:#fff;border-radius:18px;padding:40px 28px;text-align:center}
+.cta h2{color:#fff}.cta p{color:#CFE3F8;margin:0 auto 24px;max-width:50ch}
+footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:32px 0 48px}.emblem{order:-1;width:200px}.guide div{border-right:0;border-bottom:1px solid var(--line)}.guide div:last-child{border-bottom:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="#inicio"><img src="img/LogoTecnoMax.png" alt="Logo de TecnoMax">TecnoMax</a>
+<nav aria-label="Principal"><a href="Celulares.html">Celulares</a><a href="Celulares.html">Consolas</a><a href="#catalogo">Catálogo</a><a href="#categorias">Categorías</a><a href="#guia">Cómo elegir</a><a href="#contacto">Contacto</a></nav>
+</header>
+<main id="inicio">
+<div class="hero">
+<div>
+<h1>La computadora correcta para lo que haces.</h1>
+<p>En TecnoMax encuentras portátiles, equipos de escritorio y componentes para estudiar, trabajar, diseñar o jugar. Te ayudamos a elegir sin pagar de más.</p>
+<div class="btns"><a class="btn" href="#catalogo">Ver computadores</a><a class="btn alt" href="#guia">Cómo elegir</a></div>
+</div>
+<div class="emblem"><img src="img/LogoTecnoMax.png" alt="Emblema de TecnoMax: flecha plateada sobre círculo azul"></div>
+</div>
+
+<section id="catalogo">
+<h2>Computadores destacados</h2>
+<p class="lead">Filtra por tipo y elige el equipo que mejor se adapte a ti.</p>
+<div class="filters" role="group" aria-label="Filtrar por categoría">
+<button aria-pressed="true" data-c="todos">Todos</button>
+<button aria-pressed="false" data-c="Portátiles">Portátiles</button>
+<button aria-pressed="false" data-c="Escritorio">Escritorio</button>
+<button aria-pressed="false" data-c="Gaming">Gaming</button>
+</div>
+<div class="products" id="products"></div>
+</section>
+
+<section id="categorias">
+<h2>Categorías</h2>
+<p class="lead">Todo lo que necesitas para armar o renovar tu equipo.</p>
+<div class="grid">
+<article class="card"><h3>Portátiles</h3><p>Ligeras para estudiar y viajar, o potentes para trabajo pesado.</p></article>
+<article class="card"><h3>Computadoras de escritorio</h3><p>Más rendimiento por tu dinero y fáciles de mejorar con el tiempo.</p></article>
+<article class="card"><h3>Gaming</h3><p>Equipos con tarjeta gráfica dedicada y buena refrigeración.</p></article>
+<article class="card"><h3>Componentes</h3><p>Procesadores, memoria RAM, discos SSD, tarjetas gráficas y fuentes.</p></article>
+<article class="card"><h3>Periféricos</h3><p>Monitores, teclados, ratones y todo para tu espacio de trabajo.</p></article>
+<article class="card"><h3>Soporte técnico</h3><p>Mantenimiento, limpieza y mejoras para que tu equipo rinda como el primer día.</p></article>
+</div>
+</section>
+
+<section id="guia">
+<h2>Cómo elegir tu computadora</h2>
+<p class="lead">Cuatro piezas definen el rendimiento. Empieza por estas.</p>
+<div class="guide">
+<div><b>Procesador</b><span>El cerebro del equipo. Más núcleos ayudan en edición y multitarea.</span></div>
+<div><b>Memoria RAM</b><span>8 GB sirven para lo básico; 16 GB o más para diseño, programación y juegos.</span></div>
+<div><b>Almacenamiento</b><span>Un SSD hace que todo arranque y abra mucho más rápido que un disco mecánico.</span></div>
+<div><b>Tarjeta gráfica</b><span>Imprescindible para videojuegos, 3D y edición de video.</span></div>
+</div>
+</section>
+
+<section id="contacto">
+<div class="footer-contacto" id="contacto">
+      <h4>Contacto</h4>
+      <p>Correo: <a href="mailto:TecnoMax@gmail.com">TecnoMax@gmail.com</a></p>
+      <p>Teléfono: <a href="tel:+573012199517">301 2199517</a></p>
+    </div>
+    <div class="footer-redes">
+      <h4>Síguenos</h4>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+</section>
+</main>
+<footer><span>© 2026 TecnoMax. Todos los derechos reservados.</span><span>Tecnología que te impulsa.</span></footer>
+</div>
+
+<script>
+// Cambia nombres, specs y precios por los reales.
+// Las fotos van en la carpeta img/ y el campo "img" es el nombre del archivo SIN extensión.
+const items=[
+{n:"HP Pavilion 15",c:"Portátiles",s:"Core i5 · 16 GB RAM · SSD 512 GB",p:2499000,img:"HP Pavilion 15"},
+{n:"Lenovo IdeaPad Slim 3",c:"Portátiles",s:"Ryzen 5 · 8 GB RAM · SSD 512 GB",p:1899000,img:"Lenovo_IdeaPad_Slim_3"},
+{n:"MacBook Air M2",c:"Portátiles",s:"Chip M2 · 8 GB RAM · SSD 256 GB",p:4599000,img:"MacBook_Air_M2.png"},
+{n:"ASUS TUF Gaming F15",c:"Gaming",s:"Core i5 · RTX 4050 · 16 GB · SSD 512 GB",p:4299000,img:"ASUS_TUF_Gaming_F15.png"},
+{n:"Acer Nitro V 15",c:"Gaming",s:"Ryzen 7 · RTX 4060 · 16 GB · SSD 512 GB",p:4999000,img:"Acer_Nitro_V_15.png"},
+{n:"Lenovo IdeaCentre AIO 3",c:"Escritorio",s:"Todo en uno 24\" · Core i5 · 16 GB · SSD 512 GB",p:2799000,img:"Lenovo_IdeaCentre_AIO_3.png"},
+{n:"PC TecnoMax Oficina",c:"Escritorio",s:"Core i5 · 16 GB RAM · SSD 512 GB",p:2199000,img:"PC_TecnoMax_Oficina.png"},
+{n:"PC TecnoMax Gamer",c:"Gaming",s:"Ryzen 5 · RTX 4060 · 16 GB · SSD 1 TB",p:4199000,img:"PC_TecnoMax_Gamer.png"}];
+
+function showMissingImage(el){
+  const d=document.createElement('div');
+  d.className='miss';
+  d.textContent='No se encontró: img/'+el.dataset.file;
+  el.replaceWith(d);
+}
+
+const g=document.getElementById('products'),f=n=>'$'+n.toLocaleString('es-CO');
+
+function draw(c){
+  g.innerHTML=items.filter(i=>c==='todos'||i.c===c).map(i=>`
+    <article class="pcard">
+      <div class="pic">
+        <img src="img/${encodeURIComponent(i.img).replace(/%2F/g,'/')}" data-file="${i.img}" alt="${i.n}" onerror="showMissingImage(this)">
+      </div>
+      <div class="body">
+        <small>${i.c}</small>
+        <h3>${i.n}</h3>
+        <small>${i.s}</small>
+        <div class="price">${f(i.p)}</div>
+        <a class="btn" href="#contacto">Lo quiero</a>
+      </div>
+    </article>`).join('');
+}
+
+document.querySelectorAll('.filters button').forEach(x=>x.onclick=()=>{
+  document.querySelectorAll('.filters button').forEach(y=>y.setAttribute('aria-pressed',y===x));
+  draw(x.dataset.c);
+});
+draw('todos');
+</script>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TecnoMax | Celulares</title>
+<link rel="icon" href="img/LogoTecnoMax.png">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1b8ae0;--navy:#0e3f85;--silver:#e6e9ee;--ink:#10223d;--bg:#f6f8fb}
+*{box-sizing:border-box;margin:0}
+body{font-family:Sora,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 5vw;background:#fff;border-bottom:1px solid var(--silver);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem}
+.brand img{width:40px;height:40px}
+nav{display:flex;gap:22px;font-size:.95rem}
+nav a{padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover,nav a[aria-current]{border-color:var(--blue);color:var(--navy)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;padding:72px 5vw;background:linear-gradient(120deg,var(--blue),var(--navy));color:#fff;overflow:hidden}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.1;font-weight:800;max-width:14ch}
+.hero p{margin:18px 0 28px;max-width:46ch;opacity:.92}
+.btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:600;background:#fff;color:var(--navy)}
+.btn:hover{background:var(--silver)}
+.btn.alt{background:transparent;color:#fff;border:2px solid #fff;margin-left:10px}
+.btn.alt:hover{background:rgba(255,255,255,.15)}
+.phone{justify-self:center;width:min(250px,60vw);aspect-ratio:9/18.5;border-radius:36px;background:linear-gradient(160deg,#f4f4f4,#a9adb4);padding:9px;box-shadow:24px 28px 0 rgba(8,30,70,.35);transform:rotate(-6deg)}
+.phone div{height:100%;border-radius:28px;background:linear-gradient(170deg,#1b8ae0,#0b2c63);display:grid;place-items:center}
+.phone img{width:46%}
+.band{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 36px;padding:18px 5vw;background:#fff;border-bottom:1px solid var(--silver);font-size:.92rem;font-weight:600;color:var(--navy)}
+section{padding:60px 5vw}
+h2{font-size:1.7rem;margin-bottom:6px}
+.sub{color:#51627c;margin-bottom:28px}
+.brands{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.brands button{font:inherit;padding:8px 18px;border-radius:999px;border:1.5px solid var(--silver);background:#fff;cursor:pointer}
+.brands button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid var(--silver);display:flex;flex-direction:column}
+.card .pic{height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+.card .pic img{width:100%;height:100%;object-fit:contain;padding:8px}
+.card .miss{font-size:.75rem;color:#b00020;text-align:center;padding:10px}
+.card .body{padding:16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card h3{font-size:1.02rem}
+.card small{color:#51627c}
+.price{font-weight:800;font-size:1.15rem;color:var(--navy);margin-top:auto;padding-top:10px}
+.card .btn{background:var(--blue);color:#fff;text-align:center;margin-top:10px;padding:10px}
+.card .btn:hover{background:var(--navy)}
+.cross{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:0 5vw 60px;padding:34px;border-radius:22px;background:var(--navy);color:#fff}
+.cross .btn{background:var(--blue);color:#fff}
+footer{padding:28px 5vw;background:#0a2a5c;color:#cfe0f7;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:48px 5vw}.phone{order:-1}}
+@media(prefers-reduced-motion:no-preference){.phone{animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:rotate(-6deg) translateY(-12px)}}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index-celulares.html"><img src="img/LogoTecnoMax.png" alt="">TecnoMax</a>
+  <nav aria-label="Principal">
+    <a href="index-celulares.html" aria-current="page">Celulares</a>
+    <a href="Consolas.html">Consolas</a>
+    <a href="index.html#ofertas">Ofertas</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>Tu próximo celular está en TecnoMax</h1>
+    <p>Equipos nuevos de las mejores marcas, con garantía y cuotas sin complicaciones.</p>
+    <a class="btn" href="#catalogo">Ver celulares</a><a class="btn alt" href="#contacto">Hablar con un asesor</a>
+  </div>
+  <div class="phone" aria-hidden="true"><div><img src="img/LogoTecnoMax.png" alt=""></div></div>
+</div>
+
+<div class="band"><span>Garantía en todos los equipos</span><span>Envíos a todo el país</span><span>Pago en cuotas</span><span>Soporte después de la compra</span></div>
+
+<section id="catalogo">
+  <h2>Celulares destacados</h2>
+  <p class="sub">Filtra por marca y elige el que mejor se adapte a ti.</p>
+  <div class="brands" role="group" aria-label="Filtrar por marca">
+    <button aria-pressed="true" data-b="todos">Todos</button>
+    <button aria-pressed="false" data-b="Samsung">Samsung</button>
+    <button aria-pressed="false" data-b="Apple">Apple</button>
+    <button aria-pressed="false" data-b="Xiaomi">Xiaomi</button>
+    <button aria-pressed="false" data-b="Motorola">Motorola</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<div class="cross">
+  <div><h2>¿Eres de los que juegan?</h2><p>Mira las consolas y accesorios disponibles.</p></div>
+  <a class="btn" href="index-consolas.html">Ir a consolas</a>
+</div>
+<div class="footer-contacto" id="contacto">
+      <h4>Contacto</h4>
+      <p>Correo: <a href="mailto:TecnoMax@gmail.com">TecnoMax@gmail.com</a></p>
+      <p>Teléfono: <a href="tel:+573012199517">301 2199517</a></p>
+    </div>
+    <div class="footer-redes">
+      <h4>Síguenos</h4>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+
+<footer id="contacto"><span>© 2026 TecnoMax. Todos los derechos reservados.</span><span>ventas@tecnomax.com · WhatsApp +57 300 000 0000</span></footer>
+
+<script>
+// Cambia nombres, specs y precios por los reales.
+// Las imágenes deben estar en la carpeta img/ con estos nombres exactos.
+const items=[
+{n:"Galaxy S25",b:"Samsung",s:"256 GB · 8 GB RAM",p:3899000,img:"Galaxy S25 Ultra"},
+{n:"Galaxy A56",b:"Samsung",s:"128 GB · 8 GB RAM",p:1699000,img:"Galaxy A56"},
+{n:"iPhone 16",b:"Apple",s:"128 GB · cámara 48 MP",p:4299000,img:"iPhone 16"},
+{n:"iPhone 15",b:"Apple",s:"128 GB · USB-C",p:3399000,img:"iPhone 15"},
+{n:"Redmi Note 14",b:"Xiaomi",s:"256 GB · 8 GB RAM",p:999000,img:"Redmi Note 14"},
+{n:"Xiaomi 14T",b:"Xiaomi",s:"256 GB · carga 67 W",p:2299000,img:"Xiaomi 14T"},
+{n:"Moto G85",b:"Motorola",s:"256 GB · pantalla 120 Hz",p:1199000,img:"Moto G85"},
+{n:"Edge 50 Fusion",b:"Motorola",s:"256 GB · 12 GB RAM",p:1799000,img:"Edge 50 Fusion"}];
+
+const exts=['png','webp','jpg','jpeg','PNG','WEBP','JPG','JPEG'];
+function tryNext(el){
+  const i=+el.dataset.i;
+  if(i<exts.length){el.dataset.i=i+1;el.src='img/'+el.dataset.base+'.'+exts[i];}
+  else{const d=document.createElement('div');d.className='miss';d.textContent='No se encontró img/'+el.dataset.base;el.replaceWith(d);}
+}
+
+const g=document.getElementById('grid'),f=n=>'$'+n.toLocaleString('es-CO');
+
+function draw(b){
+  g.innerHTML=items.filter(i=>b==='todos'||i.b===b).map(i=>`
+    <article class="card">
+      <div class="pic">
+        <img src="img/${i.img}.png" data-base="${i.img}" data-i="1" alt="${i.n}" onerror="tryNext(this)">
+      </div>
+      <div class="body">
+        <small>${i.b}</small>
+        <h3>${i.n}</h3>
+        <small>${i.s}</small>
+        <div class="price">${f(i.p)}</div>
+        <a class="btn" href="#contacto">Lo quiero</a>
+      </div>
+    </article>`).join('');
+}
+
+document.querySelectorAll('.brands button').forEach(x=>x.onclick=()=>{
+  document.querySelectorAll('.brands button').forEach(y=>y.setAttribute('aria-pressed',y===x));
+  draw(x.dataset.b);
+});
+draw('todos');
+</script>
+</body>
+</html>

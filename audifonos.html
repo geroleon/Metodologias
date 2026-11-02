@@ -1,51 +1,104 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoMax | Audífonos</title>
-    <link rel="stylesheet" href="css/estiloaudifonos.css">
- </head>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TecnoMax | Audífonos</title>
+<link rel="icon" href="img/LogoTecnoMax.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tecnomax.css">
+</head>
 <body>
-    <section class="audifonos" id="audifonos">
-    <h2 class="audifonos__titulo">Audífonos</h2>
+<div class="wrap">
+<header>
+<a class="brand" href="index.html"><img src="img/LogoTecnoMax.png" alt="Logo de TecnoMax">TecnoMax</a>
+<nav aria-label="Principal"><a href="index.html">Inicio</a><a href="Computadoras.html">Computadoras</a><a href="Celulares.html">Celulares</a><a href="audifonos.html" aria-current="page">Audífonos</a><a href="Consolas.html">Consolas</a><a href="sobrenosotros.html">Sobre nosotros</a><a href="#contacto">Contacto</a></nav>
+</header>
+<main>
+<div class="hero">
+<div>
+<h1>El sonido correcto para cada momento.</h1>
+<p>En TecnoMax encuentras audífonos inalámbricos, con cable y gamer para música, estudio, trabajo o juegos. Te ayudamos a elegir sin pagar de más.</p>
+<div class="btns"><a class="btn" href="#catalogo">Ver audífonos</a><a class="btn alt" href="#guia">Cómo elegir</a></div>
+</div>
+<div class="emblem"><img src="img/LogoTecnoMax.png" alt="Emblema de TecnoMax: flecha plateada sobre círculo azul"></div>
+</div>
 
-    <div class="audifonos__contenedor">
-
-        <article class="audifono">
-            <img class="audifono__imagen" src="img/audifonos.webp" alt="Audífonos inalámbricos">
-            <h3 class="audifono__nombre">Audífonos Inalámbricos</h3>
-            <p class="audifono__descripcion">Bluetooth, cancelación de ruido y hasta 30 horas de batería.</p>
-            <p class="audifono__precio">$120.000</p>
-            <a class="audifono__boton" href="#">Comprar</a>
-        </article>
-
-        <article class="audifono">
-            <img class="audifono__imagen" src="img/FotoAudifonos.jpg" alt="Audífonos con cable">
-            <h3 class="audifono__nombre">Audífonos con Cable</h3>
-            <p class="audifono__descripcion">Sonido nítido y diseño cómodo para uso diario.</p>
-            <p class="audifono__precio">$45.000</p>
-            <a class="audifono__boton" href="#">Comprar</a>
-        </article>
-
-        <article class="audifono">
-            <img class="audifono__imagen" src="img/Audifonos gamer.webp" alt="Audífonos gamer">
-            <h3 class="audifono__nombre">Audífonos Gamer</h3>
-            <p class="audifono__descripcion">Micrófono incorporado, sonido envolvente e iluminación LED.</p>
-            <p class="audifono__precio">$180.000</p>
-            <a class="audifono__boton" href="#">Comprar</a>
-        </article>
-        <div class="footer-contacto" id="contacto">
-      <h4>Contacto</h4>
-      <p>Correo: <a href="mailto:TecnoMax@gmail.com">TecnoMax@gmail.com</a></p>
-      <p>Teléfono: <a href="tel:+573012199517">301 2199517</a></p>
-    </div>
-    <div class="footer-redes">
-      <h4>Síguenos</h4>
-      <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
-    </div>
-
-    </div>
+<section id="catalogo">
+<h2>Audífonos destacados</h2>
+<p class="lead">Filtra por tipo y elige los que mejor se adapten a ti.</p>
+<div class="filters" role="group" aria-label="Filtrar por categoría">
+<button aria-pressed="true" data-c="todos">Todos</button>
+<button aria-pressed="false" data-c="Inalámbricos">Inalámbricos</button>
+<button aria-pressed="false" data-c="Con cable">Con cable</button>
+<button aria-pressed="false" data-c="Gamer">Gamer</button>
+</div>
+<div class="products" id="products"></div>
 </section>
-</body>
-</html>
+
+<section id="guia">
+<h2>Cómo elegir tus audífonos</h2>
+<p class="lead">Cuatro aspectos marcan la diferencia. Empieza por estos.</p>
+<div class="guide">
+<div><b>Conexión</b><span>Bluetooth para moverte libre; cable para cero latencia y sin recargar.</span></div>
+<div><b>Cancelación de ruido</b><span>Aísla el entorno: ideal para estudiar, viajar o trabajar.</span></div>
+<div><b>Batería</b><span>Busca 20 horas o más si los usarás todo el día.</span></div>
+<div><b>Micrófono</b><span>Clave para llamadas, clases virtuales y videojuegos.</span></div>
+</div>
+</section>
+
+<section id="contacto">
+<h2>Contacto</h2>
+<p class="lead">Escríbenos y te respondemos lo antes posible.</p>
+<div class="grid">
+<article class="card"><h3>Escríbenos</h3>
+<p>Correo: <a href="mailto:TecnoMax@gmail.com">TecnoMax@gmail.com</a></p>
+<p>Teléfono: <a href="tel:+573012199517">301 2199517</a></p></article>
+<article class="card"><h3>Síguenos</h3>
+<p><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></p></article>
+</div>
+</section>
+</main>
+<footer><span>© 2026 TecnoMax. Todos los derechos reservados.</span><span>Tecnología que te impulsa.</span></footer>
+</div>
+
+<script>
+// Cambia nombres, descripciones y precios por los reales.
+// Las fotos van en la carpeta img/ y "img" es el nombre exacto del archivo (con extensión).
+const items=[
+{n:"Audífonos Inalámbricos",c:"Inalámbricos",s:"Bluetooth · Cancelación de ruido · 30 h de batería",p:120000,img:"audifonos.webp"},
+{n:"Audífonos con Cable",c:"Con cable",s:"Sonido nítido · Diseño cómodo para uso diario",p:45000,img:"FotoAudifonos.jpg"},
+{n:"Audífonos Gamer",c:"Gamer",s:"Micrófono incorporado · Sonido envolvente · LED",p:180000,img:"Audifonos gamer.webp"},
+];
+
+function showMissingImage(el){
+  const d=document.createElement('div');
+  d.className='miss';
+  d.textContent='No se encontró: img/'+el.dataset.file;
+  el.replaceWith(d);
+}
+
+const g=document.getElementById('products'),f=n=>'$'+n.toLocaleString('es-CO');
+
+function draw(c){
+  g.innerHTML=items.filter(i=>c==='todos'||i.c===c).map(i=>`
+    <article class="pcard">
+      <div class="pic">
+        <img src="img/${encodeURIComponent(i.img)}" data-file="${i.img}" alt="${i.n}" onerror="showMissingImage(this)">
+      </div>
+      <div class="body">
+        <small>${i.c}</small>
+        <h3>${i.n}</h3>
+        <small>${i.s}</small>
+        <div class="price">${f(i.p)}</div>
+        <a class="btn" href="#contacto">Comprar</a>
+      </div>
+    </article>`).join('');
+}
+
+document.querySelectorAll('.filters button').forEach(x=>x.onclick=()=>{
+  document.querySelectorAll('.filters button').forEach(y=>y.setAttribute('aria-pressed',y===x));
+  draw(x.dataset.c);
+});
+draw('todos');
+</script>
+</body></html>

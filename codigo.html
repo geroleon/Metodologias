@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventana de código</title>
+
+<!--
+  ==========================================================================
+  COMO USARLA EN TU PAGINA (3 partes, copialas desde Visual Studio Code)
+  ==========================================================================
+  1. ESTILOS : todo lo que esta dentro de <style> ... </style>  -> pegalo en tu <head>
+               (o pasa el CSS a tu archivo .css)
+  2. VENTANA : el bloque <div class="ventana-codigo"> ... </div> -> pegalo donde
+               quieras que aparezca en tu pagina
+  3. SCRIPT  : todo lo que esta dentro de <script> ... </script> del final
+               -> pegalo antes de </body>
+
+  PARA CAMBIAR EL CODIGO: pega el codigo tal cual, sin cambiarle nada, entre
+  las etiquetas <script type="text/plain" ...> y </script> de la ventana.
+  No necesitas escapar los simbolos < > &.
+  El unico texto que no puede llevar es la secuencia  </script>
+
+  PARA TENER MAS VENTANAS: copia el bloque <div class="ventana-codigo"> completo
+  las veces que quieras y cambia el titulo y el codigo de cada una.
+  ==========================================================================
+-->
+
+<!-- ========== 1. ESTILOS ========== -->
+<style>
+  .ventana-codigo {
+    --vc-fondo: #10233f;
+    --vc-barra: #17325a;
+    --vc-texto: #e6edf7;
+    --vc-plata: #c9d3e0;
+    --vc-boton: #1d4ed8;
+    --vc-boton-hover: #1e40af;
+    --vc-exito: #15803d;
+    --vc-error: #b91c1c;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 820px;
+    margin: 24px auto;
+    background: var(--vc-fondo);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(16, 35, 63, 0.25);
+  }
+
+  .ventana-codigo *,
+  .ventana-codigo *::before,
+  .ventana-codigo *::after {
+    box-sizing: inherit;
+  }
+
+  .ventana-codigo__barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--vc-barra);
+  }
+
+  .ventana-codigo__puntos {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .ventana-codigo__puntos i {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--vc-plata);
+    opacity: 0.55;
+  }
+
+  .ventana-codigo__titulo {
+    flex: 1;
+    min-width: 0;
+    color: var(--vc-plata);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ventana-codigo__copiar {
+    flex-shrink: 0;
+    min-width: 8.5rem;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--vc-boton);
+    color: #ffffff;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .ventana-codigo__copiar:hover {
+    background: var(--vc-boton-hover);
+  }
+
+  .ventana-codigo__copiar:focus-visible {
+    outline: 2px solid #bfdbfe;
+    outline-offset: 2px;
+  }
+
+  .ventana-codigo__copiar--ok {
+    background: var(--vc-exito);
+  }
+
+  .ventana-codigo__copiar--ok:hover {
+    background: var(--vc-exito);
+  }
+
+  .ventana-codigo__copiar--error {
+    background: var(--vc-error);
+  }
+
+  .ventana-codigo__copiar--error:hover {
+    background: var(--vc-error);
+  }
+
+  .ventana-codigo__pre {
+    margin: 0;
+    padding: 16px 18px;
+    max-height: 480px;
+    overflow: auto;
+  }
+
+  .ventana-codigo__pre:focus-visible {
+    outline: 2px solid #bfdbfe;
+    outline-offset: -2px;
+  }
+
+  .ventana-codigo__codigo {
+    display: block;
+    color: var(--vc-texto);
+    font-family: "Cascadia Code", "JetBrains Mono", Consolas, Menlo, monospace;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    tab-size: 4;
+  }
+
+  @media (max-width: 480px) {
+    .ventana-codigo__puntos {
+      display: none;
+    }
+    .ventana-codigo__copiar {
+      min-width: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ventana-codigo__copiar {
+      transition: none;
+    }
+  }
+</style>
+
+<!-- Estilos solo para esta pagina de prueba (no hace falta copiarlos) -->
+<style>
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: #f3f6fb;
+    color: #10233f;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  h1 {
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: 1.5rem;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Lo que se lleva del codigo</h1>
+
+<!-- ========== 2. VENTANA ========== -->
+<div class="ventana-codigo">
+  <div class="ventana-codigo__barra">
+    <span class="ventana-codigo__puntos" aria-hidden="true"><i></i><i></i><i></i></span>
+    <!-- Cambia aqui el nombre que se ve arriba de la ventana -->
+    <span class="ventana-codigo__titulo">Codigo para la pagina</span>
+    <button type="button" class="ventana-codigo__copiar">Copiar código</button>
+  </div>
+  <pre class="ventana-codigo__pre" tabindex="0" aria-label="Código"><code class="ventana-codigo__codigo"></code></pre>
+
+  <!-- Pega aqui tu codigo, tal cual, entre las dos etiquetas script -->
+  <script type="text/plain" class="ventana-codigo__fuente">
+import java.util.Scanner;
+public class TecnoMax {
+    public static void main(String[] args) {
+        //analisis:
+        //datos de entrada: opcion del menu, categoria, codigo del producto, cantidad, presupuesto,
+        //                  datos del cliente (nombre, ciudad, direccion, telefono), metodo de pago, cuotas
+        //datos de salida: catalogo, carrito, factura con descuento, envio y total a pagar
+        //procesos: subtotal = precio * cantidad, descuento segun el valor de la compra,
+        //          envio gratis desde cierto valor, recargo por contraentrega, valor de la cuota = total / cuotas
+
+        Scanner leer = new Scanner(System.in);
+
+        // ---------- CATALOGO ----------
+        // Los arrays son paralelos: la posicion 0 de cada array habla del mismo producto.
+        // Cada categoria tiene 4 productos: 0-3 computadores, 4-7 celulares, 8-11 audifonos, 12-15 consolas
+        String[] categorias = {"COMPUTADORES", "CELULARES", "AUDIFONOS", "CONSOLAS"};
+
+        String[] nombres = {
+                "Laptop Pro Max", "Laptop Gamer X15", "PC de Escritorio Office", "Laptop Basica 14",
+                "Smartphone Ultra", "Smartphone Max 5G", "Smartphone Lite", "Smartphone Plus",
+                "Audifonos Bluetooth Pro", "Audifonos Gamer RGB", "Audifonos con Cable", "Audifonos Inalambricos Sport",
+                "Consola Next Gen 1TB", "Consola Digital Edition", "Consola Portatil", "Consola Retro Mini"};
+
+        int[] precios = {
+                2500000, 3800000, 1900000, 1600000,
+                1200000, 2200000, 650000, 900000,
+                250000, 180000, 45000, 120000,
+                2400000, 1900000, 1500000, 350000};
+
+        int[] stock = {
+                10, 5, 8, 12,
+                15, 6, 20, 10,
+                25, 12, 30, 18,
+                7, 9, 10, 15};
+
+        // ---------- CARRITO DE COMPRAS ----------
+        // carritoProducto guarda la posicion del producto en el catalogo y carritoCantidad cuantas unidades lleva
+        int[] carritoProducto = new int[16];
+        int[] carritoCantidad = new int[16];
+        int itemsCarrito = 0;
+
+        // ---------- REGLAS DE LA TIENDA (aqui puedes cambiar los valores) ----------
+        int limiteDescuento1 = 2000000;     // desde este valor de compra: 5% de descuento
+        int limiteDescuento2 = 4000000;     // desde este valor de compra: 10% de descuento
+        int limiteEnvioGratis = 500000;     // desde este valor de compra el envio es gratis
+        int costoEnvio = 15000;             // costo del envio si no llega al limite
+        int recargoContraentrega = 8000;    // recargo por pagar al recibir el pedido
+        int numeroPedido = 1001;
+
+        // ---------- VARIABLES ----------
+        int opcion = 0, categoria = 0, codigo = 0, cantidad = 0, indice = 0, inicio = 0, fin = 0;
+        int presupuesto = 0, encontrados = 0, posicion = 0;
+        int subtotal = 0, unidades = 0, valorLinea = 0, porcentajeDescuento = 0, descuento = 0;
+        int envio = 0, recargo = 0, totalPagar = 0, metodo = 0, cuotas = 1, valorCuota = 0;
+        boolean encontrado = false;
+        String nombreCliente = "", ciudad = "", direccion = "", telefono = "", confirmar = "", metodoPago = "";
+
+        System.out.println("****************************************");
+        System.out.println("     BIENVENIDO A TECNOMAX");
+        System.out.println("     Tecnologia que te impulsa");
+        System.out.println("****************************************");
+        System.out.println("Productos originales, garantia incluida y envios a todo el pais");
+
+        do {
+            System.out.println();
+            System.out.println("=========== MENU PRINCIPAL ===========");
+            System.out.println("1. Ver catalogo de productos");
+            System.out.println("2. Buscar productos por presupuesto");
+            System.out.println("3. Agregar un producto al carrito");
+            System.out.println("4. Ver mi carrito");
+            System.out.println("5. Quitar un producto del carrito");
+            System.out.println("6. Pagar mi compra");
+            System.out.println("7. Ofertas y servicios");
+            System.out.println("8. Contacto");
+            System.out.println("9. Salir");
+            System.out.println("Productos distintos en tu carrito: " + itemsCarrito);
+            System.out.println("Ingrese una opcion");
+            opcion = leer.nextInt();
+
+            switch (opcion) {
+
+                // ---------------- 1. VER CATALOGO ----------------
+                case 1:
+                    System.out.println("Categorias: 1.Computadores  2.Celulares  3.Audifonos  4.Consolas  5.Ver todo");
+                    System.out.println("Ingrese la categoria que desea ver");
+                    categoria = leer.nextInt();
+
+                    while (categoria < 1 || categoria > 5) {
+                        System.out.println("Categoria no valida, ingrese un numero del 1 al 5");
+                        categoria = leer.nextInt();
+                    }
+
+                    if (categoria == 5) {
+                        inicio = 0;
+                        fin = 16;
+                    } else {
+                        inicio = (categoria - 1) * 4;
+                        fin = inicio + 4;
+                    }
+
+                    for (int x = inicio; x < fin; x++) {
+                        if (x % 4 == 0) {
+                            System.out.println("--- " + categorias[x / 4] + " ---");
+                        }
+                        if (stock[x] == 0) {
+                            System.out.println("Codigo " + (x + 1) + " | " + nombres[x] + " | $" + precios[x] + " | AGOTADO");
+                        } else if (stock[x] <= 3) {
+                            System.out.println("Codigo " + (x + 1) + " | " + nombres[x] + " | $" + precios[x] + " | Ultimas " + stock[x] + " unidades!");
+                        } else {
+                            System.out.println("Codigo " + (x + 1) + " | " + nombres[x] + " | $" + precios[x] + " | Disponibles: " + stock[x]);
+                        }
+                    }
+                    System.out.println("Para comprar, use la opcion 3 e ingrese el codigo del producto");
+                    break;
+
+                // ---------------- 2. BUSCAR POR PRESUPUESTO ----------------
+                case 2:
+                    System.out.println("Ingrese cuanto es lo maximo que desea gastar en un producto");
+                    presupuesto = leer.nextInt();
+
+                    while (presupuesto <= 0) {
+                        System.out.println("El presupuesto debe ser mayor a 0, intentalo de nuevo");
+                        presupuesto = leer.nextInt();
+                    }
+
+                    encontrados = 0;
+                    for (int x = 0; x < nombres.length; x++) {
+                        if (precios[x] <= presupuesto && stock[x] > 0) {
+                            System.out.println("Codigo " + (x + 1) + " | " + categorias[x / 4] + " | " + nombres[x] + " | $" + precios[x]);
+                            encontrados++;
+                        }
+                    }
+
+                    if (encontrados == 0) {
+                        System.out.println("No tenemos productos disponibles dentro de ese presupuesto");
+                    } else {
+                        System.out.println("Encontramos " + encontrados + " producto(s) para ti. Usa la opcion 3 para agregarlos al carrito");
+                    }
+                    break;
+
+                // ---------------- 3. AGREGAR AL CARRITO ----------------
+                case 3:
+                    System.out.println("Ingrese el codigo del producto (1 a 16), o 0 para cancelar");
+                    codigo = leer.nextInt();
+
+                    while (codigo < 0 || codigo > 16) {
+                        System.out.println("Codigo no valido, ingrese un numero del 1 al 16 (0 para cancelar)");
+                        codigo = leer.nextInt();
+                    }
+
+                    if (codigo != 0) {
+                        indice = codigo - 1;
+
+                        if (stock[indice] == 0) {
+                            System.out.println("Lo sentimos, " + nombres[indice] + " esta agotado");
+                        } else {
+                            System.out.println("Producto: " + nombres[indice] + " | Precio: $" + precios[indice] + " | Disponibles: " + stock[indice]);
+                            System.out.println("Cuantas unidades desea? (maximo " + stock[indice] + ")");
+                            cantidad = leer.nextInt();
+
+                            while (cantidad < 1 || cantidad > stock[indice]) {
+                                System.out.println("Cantidad no valida, ingrese un numero entre 1 y " + stock[indice]);
+                                cantidad = leer.nextInt();
+                            }
+
+                            // si el producto ya esta en el carrito, solo se suman las unidades
+                            encontrado = false;
+                            for (int x = 0; x < itemsCarrito; x++) {
+                                if (carritoProducto[x] == indice) {
+                                    carritoCantidad[x] += cantidad;
+                                    encontrado = true;
+                                }
+                            }
+
+                            // si no estaba, se agrega en la siguiente posicion libre
+                            if (!encontrado) {
+                                carritoProducto[itemsCarrito] = indice;
+                                carritoCantidad[itemsCarrito] = cantidad;
+                                itemsCarrito++;
+                            }
+
+                            stock[indice] -= cantidad;
+                            System.out.println("Agregaste " + cantidad + " x " + nombres[indice] + " por $" + (precios[indice] * cantidad));
+                        }
+                    }
+                    break;
+
+                // ---------------- 4. VER CARRITO ----------------
+                case 4:
+                    if (itemsCarrito == 0) {
+                        System.out.println("Tu carrito esta vacio, mira el catalogo y agrega lo que te guste");
+                    } else {
+                        subtotal = 0;
+                        unidades = 0;
+                        System.out.println("---------- TU CARRITO ----------");
+                        for (int x = 0; x < itemsCarrito; x++) {
+                            indice = carritoProducto[x];
+                            valorLinea = precios[indice] * carritoCantidad[x];
+                            System.out.println((x + 1) + ". " + nombres[indice] + " | " + carritoCantidad[x] + " x $" + precios[indice] + " = $" + valorLinea);
+                            subtotal += valorLinea;
+                            unidades += carritoCantidad[x];
+                        }
+                        System.out.println("Total de unidades: " + unidades);
+                        System.out.println("Subtotal: $" + subtotal);
+
+                        if (subtotal >= limiteEnvioGratis) {
+                            System.out.println("Tu envio es GRATIS");
+                        } else {
+                            System.out.println("Te faltan $" + (limiteEnvioGratis - subtotal) + " para tener envio gratis");
+                        }
+
+                        if (subtotal < limiteDescuento1) {
+                            System.out.println("Te faltan $" + (limiteDescuento1 - subtotal) + " para obtener 5% de descuento");
+                        } else if (subtotal < limiteDescuento2) {
+                            System.out.println("Ya tienes 5% de descuento. Te faltan $" + (limiteDescuento2 - subtotal) + " para obtener 10%");
+                        } else {
+                            System.out.println("Ya tienes el maximo descuento: 10%");
+                        }
+                    }
+                    break;
+
+                // ---------------- 5. QUITAR DEL CARRITO ----------------
+                case 5:
+                    if (itemsCarrito == 0) {
+                        System.out.println("Tu carrito esta vacio, no hay nada para quitar");
+                    } else {
+                        for (int x = 0; x < itemsCarrito; x++) {
+                            indice = carritoProducto[x];
+                            System.out.println((x + 1) + ". " + nombres[indice] + " | Cantidad: " + carritoCantidad[x]);
+                        }
+                        System.out.println("Ingrese el numero del producto que desea quitar (0 para cancelar)");
+                        posicion = leer.nextInt();
+
+                        while (posicion < 0 || posicion > itemsCarrito) {
+                            System.out.println("Numero no valido, ingrese uno de la lista (0 para cancelar)");
+                            posicion = leer.nextInt();
+                        }
+
+                        if (posicion != 0) {
+                            indice = carritoProducto[posicion - 1];
+                            // las unidades vuelven a estar disponibles en la tienda
+                            stock[indice] += carritoCantidad[posicion - 1];
+
+                            // se corre el resto del carrito una posicion hacia atras
+                            for (int x = posicion - 1; x < itemsCarrito - 1; x++) {
+                                carritoProducto[x] = carritoProducto[x + 1];
+                                carritoCantidad[x] = carritoCantidad[x + 1];
+                            }
+                            itemsCarrito--;
+                            System.out.println("Quitaste " + nombres[indice] + " de tu carrito");
+                        }
+                    }
+                    break;
+
+                // ---------------- 6. PAGAR ----------------
+                case 6:
+                    if (itemsCarrito == 0) {
+                        System.out.println("Tu carrito esta vacio, agrega productos antes de pagar");
+                    } else {
+                        subtotal = 0;
+                        unidades = 0;
+                        System.out.println("---------- RESUMEN DE TU COMPRA ----------");
+                        for (int x = 0; x < itemsCarrito; x++) {
+                            indice = carritoProducto[x];
+                            valorLinea = precios[indice] * carritoCantidad[x];
+                            System.out.println(carritoCantidad[x] + " x " + nombres[indice] + " = $" + valorLinea);
+                            subtotal += valorLinea;
+                            unidades += carritoCantidad[x];
+                        }
+
+                        // descuento segun el valor de la compra
+                        if (subtotal >= limiteDescuento2) {
+                            porcentajeDescuento = 10;
+                        } else if (subtotal >= limiteDescuento1) {
+                            porcentajeDescuento = 5;
+                        } else {
+                            porcentajeDescuento = 0;
+                        }
+                        descuento = subtotal / 100 * porcentajeDescuento;
+
+                        // envio
+                        if (subtotal >= limiteEnvioGratis) {
+                            envio = 0;
+                        } else {
+                            envio = costoEnvio;
+                        }
+
+                        System.out.println("Subtotal: $" + subtotal);
+                        System.out.println("Descuento (" + porcentajeDescuento + "%): -$" + descuento);
+                        System.out.println("Envio: $" + envio);
+
+                        // datos del cliente
+                        leer.nextLine(); // consume el salto de linea pendiente
+                        System.out.println("Ingrese su nombre completo");
+                        nombreCliente = leer.nextLine();
+                        System.out.println("Ingrese la ciudad de entrega");
+                        ciudad = leer.nextLine();
+                        System.out.println("Ingrese la direccion de entrega");
+                        direccion = leer.nextLine();
+                        System.out.println("Ingrese su numero de telefono");
+                        telefono = leer.nextLine();
+
+                        // metodo de pago
+                        System.out.println("Metodo de pago: 1.Tarjeta de credito/debito  2.PSE  3.Pago contraentrega");
+                        metodo = leer.nextInt();
+
+                        while (metodo < 1 || metodo > 3) {
+                            System.out.println("Metodo no valido, ingrese 1, 2 o 3");
+                            metodo = leer.nextInt();
+                        }
+
+                        recargo = 0;
+                        cuotas = 1;
+
+                        if (metodo == 1) {
+                            metodoPago = "Tarjeta de credito/debito";
+                            System.out.println("En cuantas cuotas desea pagar? (1, 3, 6 o 12)");
+                            cuotas = leer.nextInt();
+
+                            while (cuotas != 1 && cuotas != 3 && cuotas != 6 && cuotas != 12) {
+                                System.out.println("Cuotas no validas, ingrese 1, 3, 6 o 12");
+                                cuotas = leer.nextInt();
+                            }
+                        } else if (metodo == 2) {
+                            metodoPago = "PSE";
+                        } else {
+                            metodoPago = "Pago contraentrega";
+                            recargo = recargoContraentrega;
+                            System.out.println("El pago contraentrega tiene un recargo de $" + recargo);
+                        }
+
+                        totalPagar = subtotal - descuento + envio + recargo;
+                        valorCuota = totalPagar / cuotas;
+
+                        System.out.println();
+                        System.out.println("---------- FACTURA ----------");
+                        System.out.println("Cliente: " + nombreCliente);
+                        System.out.println("Telefono: " + telefono);
+                        System.out.println("Entrega en: " + direccion + ", " + ciudad);
+                        System.out.println("Unidades: " + unidades);
+                        System.out.println("Subtotal: $" + subtotal);
+                        System.out.println("Descuento: -$" + descuento);
+                        System.out.println("Envio: $" + envio);
+                        System.out.println("Recargo: $" + recargo);
+                        System.out.println("Metodo de pago: " + metodoPago);
+                        if (cuotas > 1) {
+                            System.out.println("Pagaras " + cuotas + " cuotas de aprox. $" + valorCuota);
+                        }
+                        System.out.println("TOTAL A PAGAR: $" + totalPagar);
+
+                        System.out.println("Desea confirmar la compra? (si/no)");
+                        leer.nextLine(); // consume el salto de linea pendiente
+                        confirmar = leer.nextLine().toLowerCase();
+
+                        while (!confirmar.equals("si") && !confirmar.equals("no")) {
+                            System.out.println("Respuesta no valida, escriba si o no");
+                            confirmar = leer.nextLine().toLowerCase();
+                        }
+
+                        if (confirmar.equals("si")) {
+                            System.out.println();
+                            System.out.println("COMPRA EXITOSA!!!");
+                            System.out.println("Numero de pedido: " + numeroPedido);
+                            System.out.println("Gracias por tu compra, " + nombreCliente);
+                            System.out.println("Tu pedido llegara a " + ciudad + " en 3 a 5 dias habiles");
+                            System.out.println("Todos tus productos incluyen garantia");
+                            System.out.println("Soporte tecnico: TecnoMax@gmail.com | 301 2199517");
+                            numeroPedido++;
+                            itemsCarrito = 0; // el carrito queda vacio para una nueva compra
+                        } else {
+                            System.out.println("Compra no confirmada, tu carrito sigue guardado");
+                        }
+                    }
+                    break;
+
+                // ---------------- 7. OFERTAS Y SERVICIOS ----------------
+                case 7:
+                    System.out.println("---------- OFERTAS ----------");
+                    System.out.println("Compras desde $" + limiteDescuento1 + ": 5% de descuento");
+                    System.out.println("Compras desde $" + limiteDescuento2 + ": 10% de descuento");
+                    System.out.println("Compras desde $" + limiteEnvioGratis + ": envio GRATIS");
+                    System.out.println("Tarjeta de credito/debito: paga hasta en 12 cuotas");
+                    System.out.println("---------- SERVICIOS ----------");
+                    System.out.println("- Asesoria personalizada para elegir el producto ideal");
+                    System.out.println("- Envios a todo el pais");
+                    System.out.println("- Garantia incluida en todos los productos");
+                    System.out.println("- Solo productos originales");
+                    System.out.println("- Soporte tecnico");
+                    break;
+
+                // ---------------- 8. CONTACTO ----------------
+                case 8:
+                    System.out.println("---------- CONTACTO ----------");
+                    System.out.println("Escribenos y te respondemos lo antes posible");
+                    System.out.println("Correo: TecnoMax@gmail.com");
+                    System.out.println("Telefono: 301 2199517");
+                    System.out.println("Siguenos en Instagram");
+                    break;
+
+                // ---------------- 9. SALIR ----------------
+                case 9:
+                    if (itemsCarrito > 0) {
+                        System.out.println("Tienes " + itemsCarrito + " producto(s) en tu carrito sin pagar. Seguro que desea salir? (si/no)");
+                        leer.nextLine(); // consume el salto de linea pendiente
+                        confirmar = leer.nextLine().toLowerCase();
+
+                        while (!confirmar.equals("si") && !confirmar.equals("no")) {
+                            System.out.println("Respuesta no valida, escriba si o no");
+                            confirmar = leer.nextLine().toLowerCase();
+                        }
+
+                        if (confirmar.equals("no")) {
+                            opcion = 0; // se queda en el menu
+                        }
+                    }
+                    if (opcion == 9) {
+                        System.out.println("Gracias por visitar TecnoMax. Tecnologia que te impulsa!");
+                    }
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida, ingrese un numero del 1 al 9");
+            }
+        }
+        while (opcion != 9);
+
+    }
+}
+  </script>
+</div>
+
+<!-- ========== 3. SCRIPT ========== -->
+<script>
+  (function () {
+    // Quita lineas vacias del inicio y del final, y la sangria que sobre
+    function limpiar(texto) {
+      var lineas = texto.replace(/\r/g, '').split('\n');
+      while (lineas.length && lineas[0].trim() === '') lineas.shift();
+      while (lineas.length && lineas[lineas.length - 1].trim() === '') lineas.pop();
+
+      var minimo = null;
+      lineas.forEach(function (linea) {
+        if (linea.trim() === '') return;
+        var espacios = linea.match(/^[ \t]*/)[0].length;
+        if (minimo === null || espacios < minimo) minimo = espacios;
+      });
+
+      return lineas.map(function (linea) {
+        return linea.slice(minimo || 0);
+      }).join('\n');
+    }
+
+    // Copia al portapapeles (con plan B para navegadores que no dejan usar la API)
+    function copiar(texto) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(texto);
+      }
+      return new Promise(function (resolver, rechazar) {
+        var area = document.createElement('textarea');
+        area.value = texto;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        try {
+          if (document.execCommand('copy')) {
+            resolver();
+          } else {
+            rechazar();
+          }
+        } catch (error) {
+          rechazar(error);
+        }
+        document.body.removeChild(area);
+      });
+    }
+
+    var ventanas = document.querySelectorAll('.ventana-codigo');
+
+    ventanas.forEach(function (ventana) {
+      var fuente = ventana.querySelector('.ventana-codigo__fuente');
+      var zonaCodigo = ventana.querySelector('.ventana-codigo__codigo');
+      var boton = ventana.querySelector('.ventana-codigo__copiar');
+      if (!fuente || !zonaCodigo || !boton) return;
+
+      var codigo = limpiar(fuente.textContent);
+      var textoOriginal = boton.textContent;
+      var temporizador = null;
+
+      zonaCodigo.textContent = codigo;
+      boton.setAttribute('aria-live', 'polite');
+
+      function volverAlInicio() {
+        boton.textContent = textoOriginal;
+        boton.classList.remove('ventana-codigo__copiar--ok', 'ventana-codigo__copiar--error');
+      }
+
+      boton.addEventListener('click', function () {
+        clearTimeout(temporizador);
+        copiar(codigo).then(function () {
+          boton.textContent = 'Código copiado';
+          boton.classList.remove('ventana-codigo__copiar--error');
+          boton.classList.add('ventana-codigo__copiar--ok');
+          temporizador = setTimeout(volverAlInicio, 2000);
+        }).catch(function () {
+          boton.textContent = 'No se pudo copiar';
+          boton.classList.remove('ventana-codigo__copiar--ok');
+          boton.classList.add('ventana-codigo__copiar--error');
+          temporizador = setTimeout(volverAlInicio, 2500);
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

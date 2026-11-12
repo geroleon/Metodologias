@@ -182,8 +182,6 @@ public class TecnoMax {
 
         Scanner leer = new Scanner(System.in);
 
-        // ---------- CATÁLOGO (arrays paralelos) ----------
-        // 0-3 computadores, 4-7 celulares, 8-11 audífonos, 12-15 consolas
         String[] categorias = {"COMPUTADORES", "CELULARES", "AUDIFONOS", "CONSOLAS"};
 
         String[] nombres = {
@@ -207,12 +205,10 @@ public class TecnoMax {
                 7, 9, 10, 15
         };
 
-        // ---------- CARRITO ----------
         int[] carritoProducto = new int[16];
         int[] carritoCantidad = new int[16];
         int itemsCarrito = 0;
 
-        // ---------- REGLAS DE LA TIENDA ----------
         int limiteDescuento1 = 2000000;   // 5%
         int limiteDescuento2 = 4000000;   // 10%
         int limiteEnvioGratis = 500000;
@@ -220,7 +216,6 @@ public class TecnoMax {
         int recargoContraentrega = 8000;
         int numeroPedido = 1001;
 
-        // ---------- VARIABLES ----------
         int opcion = 0, categoria = 0, codigo = 0, cantidad = 0, indice = 0;
         int inicio = 0, fin = 0, presupuesto = 0, encontrados = 0, posicion = 0;
         int subtotal = 0, unidades = 0, valorLinea = 0;
@@ -238,7 +233,7 @@ public class TecnoMax {
 
         do {
             System.out.println();
-            System.out.println("=========== MENU PRINCIPAL ===========");
+            System.out.println("            MENU PRINCIPAL         ");
             System.out.println("1. Ver catalogo de productos");
             System.out.println("2. Buscar productos por presupuesto");
             System.out.println("3. Agregar un producto al carrito");
@@ -254,7 +249,6 @@ public class TecnoMax {
 
             switch (opcion) {
 
-                // ---------------- 1. VER CATÁLOGO ----------------
                 case 1:
                     System.out.println("Categorias: 1.Computadores  2.Celulares  3.Audifonos  4.Consolas  5.Ver todo");
                     System.out.print("Ingrese la categoria que desea ver: ");
@@ -288,7 +282,6 @@ public class TecnoMax {
                     System.out.println("Para comprar, use la opcion 3 e ingrese el codigo del producto");
                     break;
 
-                // ---------------- 2. BUSCAR POR PRESUPUESTO ----------------
                 case 2:
                     System.out.print("Ingrese cuanto es lo maximo que desea gastar en un producto: ");
                     presupuesto = leer.nextInt();
@@ -313,7 +306,6 @@ public class TecnoMax {
                     }
                     break;
 
-                // ---------------- 3. AGREGAR AL CARRITO ----------------
                 case 3:
                     System.out.print("Ingrese el codigo del producto (1 a 16), o 0 para cancelar: ");
                     codigo = leer.nextInt();
@@ -338,7 +330,6 @@ public class TecnoMax {
                                 cantidad = leer.nextInt();
                             }
 
-                            // Si el producto ya está en el carrito, solo se suman las unidades
                             encontrado = false;
                             for (int x = 0; x < itemsCarrito; x++) {
                                 if (carritoProducto[x] == indice) {
@@ -347,7 +338,6 @@ public class TecnoMax {
                                 }
                             }
 
-                            // Si no estaba, se agrega
                             if (!encontrado) {
                                 carritoProducto[itemsCarrito] = indice;
                                 carritoCantidad[itemsCarrito] = cantidad;
@@ -360,7 +350,6 @@ public class TecnoMax {
                     }
                     break;
 
-                // ---------------- 4. VER CARRITO ----------------
                 case 4:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, mira el catalogo y agrega lo que te guste");
@@ -394,7 +383,6 @@ public class TecnoMax {
                     }
                     break;
 
-                // ---------------- 5. QUITAR DEL CARRITO ----------------
                 case 5:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, no hay nada para quitar");
@@ -415,7 +403,6 @@ public class TecnoMax {
                             indice = carritoProducto[posicion - 1];
                             stock[indice] += carritoCantidad[posicion - 1];
 
-                            // Correr el resto del carrito una posición hacia atrás
                             for (int x = posicion - 1; x < itemsCarrito - 1; x++) {
                                 carritoProducto[x] = carritoProducto[x + 1];
                                 carritoCantidad[x] = carritoCantidad[x + 1];
@@ -426,7 +413,6 @@ public class TecnoMax {
                     }
                     break;
 
-                // ---------------- 6. PAGAR ----------------
                 case 6:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, agrega productos antes de pagar");
@@ -442,7 +428,6 @@ public class TecnoMax {
                             unidades += carritoCantidad[x];
                         }
 
-                        // Descuento
                         if (subtotal >= limiteDescuento2) {
                             porcentajeDescuento = 10;
                         } else if (subtotal >= limiteDescuento1) {
@@ -452,7 +437,6 @@ public class TecnoMax {
                         }
                         descuento = subtotal / 100 * porcentajeDescuento;
 
-                        // Envío
                         if (subtotal >= limiteEnvioGratis) {
                             envio = 0;
                         } else {
@@ -462,9 +446,7 @@ public class TecnoMax {
                         System.out.println("Subtotal: $" + subtotal);
                         System.out.println("Descuento (" + porcentajeDescuento + "%): -$" + descuento);
                         System.out.println("Envio: $" + envio);
-
-                        // Datos del cliente
-                        leer.nextLine(); // limpia el buffer
+                        leer.nextLine();
                         System.out.print("Ingrese su nombre completo: ");
                         nombreCliente = leer.nextLine();
                         System.out.print("Ingrese la ciudad de entrega: ");
@@ -474,7 +456,6 @@ public class TecnoMax {
                         System.out.print("Ingrese su numero de telefono: ");
                         telefono = leer.nextLine();
 
-                        // Método de pago
                         System.out.println("Metodo de pago: 1.Tarjeta de credito/debito  2.PSE  3.Pago contraentrega");
                         System.out.print("Elija: ");
                         metodo = leer.nextInt();
@@ -507,7 +488,6 @@ public class TecnoMax {
                         totalPagar = subtotal - descuento + envio + recargo;
                         valorCuota = totalPagar / cuotas;
 
-                        System.out.println();
                         System.out.println("---------- FACTURA ----------");
                         System.out.println("Cliente: " + nombreCliente);
                         System.out.println("Telefono: " + telefono);
@@ -548,23 +528,8 @@ public class TecnoMax {
                     }
                     break;
 
-                // ---------------- 7. OFERTAS Y SERVICIOS ----------------
-                case 7:
-                    System.out.println("---------- OFERTAS ----------");
-                    System.out.println("Compras desde $" + limiteDescuento1 + ": 5% de descuento");
-                    System.out.println("Compras desde $" + limiteDescuento2 + ": 10% de descuento");
-                    System.out.println("Compras desde $" + limiteEnvioGratis + ": envio GRATIS");
-                    System.out.println("Tarjeta de credito/debito: paga hasta en 12 cuotas");
-                    System.out.println("---------- SERVICIOS ----------");
-                    System.out.println("- Asesoria personalizada para elegir el producto ideal");
-                    System.out.println("- Envios a todo el pais");
-                    System.out.println("- Garantia incluida en todos los productos");
-                    System.out.println("- Solo productos originales");
-                    System.out.println("- Soporte tecnico");
-                    break;
 
-                // ---------------- 8. CONTACTO ----------------
-                case 8:
+                case 7:
                     System.out.println("---------- CONTACTO ----------");
                     System.out.println("Escribenos y te respondemos lo antes posible");
                     System.out.println("Correo: TecnoMax@gmail.com");
@@ -572,8 +537,7 @@ public class TecnoMax {
                     System.out.println("Siguenos en Instagram");
                     break;
 
-                // ---------------- 9. SALIR ----------------
-                case 9:
+                case 8:
                     if (itemsCarrito > 0) {
                         System.out.print("Tienes " + itemsCarrito + " producto(s) en tu carrito sin pagar. Seguro que desea salir? (si/no): ");
                         leer.nextLine();

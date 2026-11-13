@@ -183,7 +183,6 @@ public class TecnoMax {
         Scanner leer = new Scanner(System.in);
 
         String[] categorias = {"COMPUTADORES", "CELULARES", "AUDIFONOS", "CONSOLAS"};
-
         String[] nombres = {
                 "Laptop Pro Max", "Laptop Gamer X15", "PC de Escritorio Office", "Laptop Basica 14",
                 "Smartphone Ultra", "Smartphone Max 5G", "Smartphone Lite", "Smartphone Plus",
@@ -209,12 +208,13 @@ public class TecnoMax {
         int[] carritoCantidad = new int[16];
         int itemsCarrito = 0;
 
-        int limiteDescuento1 = 2000000;   // 5%
-        int limiteDescuento2 = 4000000;   // 10%
+        int limiteDescuento1 = 2000000;
+        int limiteDescuento2 = 4000000;
         int limiteEnvioGratis = 500000;
         int costoEnvio = 15000;
         int recargoContraentrega = 8000;
         int numeroPedido = 1001;
+
 
         int opcion = 0, categoria = 0, codigo = 0, cantidad = 0, indice = 0;
         int inicio = 0, fin = 0, presupuesto = 0, encontrados = 0, posicion = 0;
@@ -225,29 +225,29 @@ public class TecnoMax {
         String nombreCliente = "", ciudad = "", direccion = "", telefono = "";
         String confirmar = "", metodoPago = "";
 
-        System.out.println("****************************************");
+        System.out.println("----------------------------------------");
         System.out.println("     BIENVENIDO A TECNOMAX");
         System.out.println("     Tecnologia que te impulsa");
-        System.out.println("****************************************");
+        System.out.println("-----------------------------------------");
         System.out.println("Productos originales, garantia incluida y envios a todo el pais");
 
         do {
             System.out.println();
-            System.out.println("            MENU PRINCIPAL         ");
+            System.out.println("=========== MENU PRINCIPAL ===========");
             System.out.println("1. Ver catalogo de productos");
             System.out.println("2. Buscar productos por presupuesto");
             System.out.println("3. Agregar un producto al carrito");
             System.out.println("4. Ver mi carrito");
             System.out.println("5. Quitar un producto del carrito");
             System.out.println("6. Pagar mi compra");
-            System.out.println("7. Contacto");
-            System.out.println("8. Salir");
+            System.out.println("7. Ofertas y servicios");
+            System.out.println("8. Contacto");
+            System.out.println("9. Salir");
             System.out.println("Productos distintos en tu carrito: " + itemsCarrito);
             System.out.print("Ingrese una opcion: ");
             opcion = leer.nextInt();
 
             switch (opcion) {
-
                 case 1:
                     System.out.println("Categorias: 1.Computadores  2.Celulares  3.Audifonos  4.Consolas  5.Ver todo");
                     System.out.print("Ingrese la categoria que desea ver: ");
@@ -280,7 +280,6 @@ public class TecnoMax {
                     }
                     System.out.println("Para comprar, use la opcion 3 e ingrese el codigo del producto");
                     break;
-
                 case 2:
                     System.out.print("Ingrese cuanto es lo maximo que desea gastar en un producto: ");
                     presupuesto = leer.nextInt();
@@ -304,7 +303,6 @@ public class TecnoMax {
                         System.out.println("Encontramos " + encontrados + " producto(s) para ti. Usa la opcion 3 para agregarlos al carrito");
                     }
                     break;
-
                 case 3:
                     System.out.print("Ingrese el codigo del producto (1 a 16), o 0 para cancelar: ");
                     codigo = leer.nextInt();
@@ -328,7 +326,6 @@ public class TecnoMax {
                                 System.out.print("Cantidad no valida, ingrese un numero entre 1 y " + stock[indice] + ": ");
                                 cantidad = leer.nextInt();
                             }
-
                             encontrado = false;
                             for (int x = 0; x < itemsCarrito; x++) {
                                 if (carritoProducto[x] == indice) {
@@ -336,7 +333,6 @@ public class TecnoMax {
                                     encontrado = true;
                                 }
                             }
-
                             if (!encontrado) {
                                 carritoProducto[itemsCarrito] = indice;
                                 carritoCantidad[itemsCarrito] = cantidad;
@@ -348,7 +344,6 @@ public class TecnoMax {
                         }
                     }
                     break;
-
                 case 4:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, mira el catalogo y agrega lo que te guste");
@@ -381,7 +376,6 @@ public class TecnoMax {
                         }
                     }
                     break;
-
                 case 5:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, no hay nada para quitar");
@@ -401,7 +395,6 @@ public class TecnoMax {
                         if (posicion != 0) {
                             indice = carritoProducto[posicion - 1];
                             stock[indice] += carritoCantidad[posicion - 1];
-
                             for (int x = posicion - 1; x < itemsCarrito - 1; x++) {
                                 carritoProducto[x] = carritoProducto[x + 1];
                                 carritoCantidad[x] = carritoCantidad[x + 1];
@@ -411,7 +404,6 @@ public class TecnoMax {
                         }
                     }
                     break;
-
                 case 6:
                     if (itemsCarrito == 0) {
                         System.out.println("Tu carrito esta vacio, agrega productos antes de pagar");
@@ -436,6 +428,7 @@ public class TecnoMax {
                         }
                         descuento = subtotal / 100 * porcentajeDescuento;
 
+                        // Envío
                         if (subtotal >= limiteEnvioGratis) {
                             envio = 0;
                         } else {
@@ -445,7 +438,6 @@ public class TecnoMax {
                         System.out.println("Subtotal: $" + subtotal);
                         System.out.println("Descuento (" + porcentajeDescuento + "%): -$" + descuento);
                         System.out.println("Envio: $" + envio);
-                        leer.nextLine();
                         System.out.print("Ingrese su nombre completo: ");
                         nombreCliente = leer.nextLine();
                         System.out.print("Ingrese la ciudad de entrega: ");
@@ -487,6 +479,7 @@ public class TecnoMax {
                         totalPagar = subtotal - descuento + envio + recargo;
                         valorCuota = totalPagar / cuotas;
 
+                        System.out.println();
                         System.out.println("---------- FACTURA ----------");
                         System.out.println("Cliente: " + nombreCliente);
                         System.out.println("Telefono: " + telefono);
@@ -520,21 +513,32 @@ public class TecnoMax {
                             System.out.println("Todos tus productos incluyen garantia");
                             System.out.println("Soporte tecnico: TecnoMax@gmail.com | 301 2199517");
                             numeroPedido++;
-                            itemsCarrito = 0; // carrito vacío
+                            itemsCarrito = 0;
                         } else {
                             System.out.println("Compra no confirmada, tu carrito sigue guardado");
                         }
                     }
                     break;
-
                 case 7:
+                    System.out.println("---------- OFERTAS ----------");
+                    System.out.println("Compras desde $" + limiteDescuento1 + ": 5% de descuento");
+                    System.out.println("Compras desde $" + limiteDescuento2 + ": 10% de descuento");
+                    System.out.println("Compras desde $" + limiteEnvioGratis + ": envio GRATIS");
+                    System.out.println("Tarjeta de credito/debito: paga hasta en 12 cuotas");
+                    System.out.println("---------- SERVICIOS ----------");
+                    System.out.println("- Asesoria personalizada para elegir el producto ideal");
+                    System.out.println("- Envios a todo el pais");
+                    System.out.println("- Garantia incluida en todos los productos");
+                    System.out.println("- Solo productos originales");
+                    System.out.println("- Soporte tecnico");
+                    break;
+                case 8:
                     System.out.println("---------- CONTACTO ----------");
                     System.out.println("Escribenos y te respondemos lo antes posible");
                     System.out.println("Correo: TecnoMax@gmail.com");
                     System.out.println("Telefono: 301 2199517");
                     break;
-
-                case 8:
+                case 9:
                     if (itemsCarrito > 0) {
                         System.out.print("Tienes " + itemsCarrito + " producto(s) en tu carrito sin pagar. Seguro que desea salir? (si/no): ");
                         leer.nextLine();
@@ -546,19 +550,19 @@ public class TecnoMax {
                         }
 
                         if (confirmar.equals("no")) {
-                            opcion = 0; // se queda en el menú
+                            opcion = 0;
                         }
                     }
-                    if (opcion == 8) {
+                    if (opcion == 9) {
                         System.out.println("Gracias por visitar TecnoMax. Tecnologia que te impulsa!");
                     }
                     break;
 
                 default:
-                    System.out.println("Opcion no valida, ingrese un numero del 1 al 8");
+                    System.out.println("Opcion no valida, ingrese un numero del 1 al 9");
             }
 
-        } while (opcion != 8);
+        } while (opcion != 9);
 
         leer.close();
     }
